@@ -634,7 +634,7 @@ Accessing many objects<br>
 ### Basically a polymorphic view
 
 ```c++
-void process(Vehicle vehicle) {
+void process(VehicleRef vehicle) {
   ...
   vehicle.accelerate();
   ...
@@ -648,19 +648,15 @@ int main() {
 
 ----
 
-<!-- .slide: class="slide-hidden" -->
-
 ### How that's implemented
 
-<pre><code data-sample='code/non_owning_storage.cpp#Vehicle'></code></pre>
+<pre><code data-sample='code/non_owning_storage.cpp#VehicleRef'></code></pre>
 
 ----
 
-<!-- .slide: class="slide-hidden" -->
-
 ### With Dyno
 
-<pre><code data-sample='code/non_owning_storage.dyno.cpp#Vehicle'></code></pre>
+<pre><code data-sample='code/non_owning_storage.dyno.cpp#VehicleRef'></code></pre>
 
 ====================
 

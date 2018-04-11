@@ -11,11 +11,11 @@
 using namespace dyno::literals;
 
 
-// sample(Vehicle)
-struct Vehicle {
+// sample(VehicleRef)
+struct VehicleRef {
   template <typename Any>
-  Vehicle(Any& vehicle) : poly_{vehicle} { }
-  //      ^^^^ now a reference
+  VehicleRef(Any& vehicle) : poly_{vehicle} { }
+  //         ^^^^ now a reference
 
   void accelerate()
   { poly_.virtual_("accelerate"_s)(poly_); }
@@ -51,12 +51,12 @@ int main() {
   Truck chevrolet{"Chevrolet", 2015};
   Plane boeing{"Boeing", "747"};
 
-  std::vector<Vehicle> vehicles;
+  std::vector<VehicleRef> vehicles;
   vehicles.push_back(audi);
   vehicles.push_back(chevrolet);
   vehicles.push_back(boeing);
 
-  for (Vehicle vehicle : vehicles) {
+  for (VehicleRef vehicle : vehicles) {
     vehicle.accelerate();
   }
 }

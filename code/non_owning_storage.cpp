@@ -9,14 +9,14 @@
 #include <vector>
 
 
-// sample(Vehicle)
-class Vehicle {
+// sample(VehicleRef)
+class VehicleRef {
   vtable const* const vptr_;
   void* ref_;
 
 public:
   template <typename Any>
-  Vehicle(Any& vehicle)
+  VehicleRef(Any& vehicle)
     : vptr_{&vtable_for<Any>}
     , ref_{&vehicle}
   { }
@@ -51,12 +51,12 @@ int main() {
   Truck chevrolet{"Chevrolet", 2015};
   Plane boeing{"Boeing", "747"};
 
-  std::vector<Vehicle> vehicles;
+  std::vector<VehicleRef> vehicles;
   vehicles.push_back(audi);
   vehicles.push_back(chevrolet);
   vehicles.push_back(boeing);
 
-  for (Vehicle vehicle : vehicles) {
+  for (VehicleRef vehicle : vehicles) {
     vehicle.accelerate();
   }
 }
