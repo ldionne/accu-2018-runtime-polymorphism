@@ -819,6 +819,9 @@ document_t& current(history_t& x) {
 
 ### Usually a pessimization
 
+- If vtable in the cache, indirection does not matter
+- Vtable in the object is more likely to be cold
+
 ====================
 
 ### Partial vtable inlining
