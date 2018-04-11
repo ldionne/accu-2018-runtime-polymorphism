@@ -1236,29 +1236,14 @@ https://ldionne.com
         });
       });
 
-      // Returns the next vertical slide, or undefined if there's no next slide.
-      var nextVerticalSlide = function(currentSlide) {
-        var parent = currentSlide.parentNode;
-        var currentIndex = 0;
-        for (; currentIndex < parent.children.length; currentIndex++) {
-            if (parent.children[currentIndex] == currentSlide) {
-              break;
-            }
-        }
-        return parent.children[currentIndex + 1];
-      };
-
-      // When the next slide contains an element with id '#godbolt', we reload
+      // When the current slide contains an element with id '#godbolt', we reload
       // the iframe. This is to workaround a bug where the iframe would otherwise
       // not be painted properly.
       Reveal.addEventListener('slidechanged', function(event) {
-        var next = nextVerticalSlide(event.currentSlide);
-        if (next != undefined) {
-          var godbolt = next.querySelector("#godbolt");
-          if (godbolt != undefined) {
-            console.log("Reloading godbolt iframe");
-            godbolt.contentWindow.location.reload(true);
-          }
+        var godbolt = event.currentSlide.querySelector("#godbolt");
+        if (godbolt != undefined) {
+          console.log("Reloading godbolt iframe");
+          godbolt.contentWindow.location.reload(true);
         }
       });
 
