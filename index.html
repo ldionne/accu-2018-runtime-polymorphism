@@ -830,17 +830,23 @@ document_t& current(history_t& x) {
 
 ----
 
+<!-- .slide: class="slide-hidden" -->
+
 ### The Vtable &mdash; remote part
 
 <pre><code data-sample='code/joined_vtable.cpp#vtable'></code></pre>
 
 ----
 
+<!-- .slide: class="slide-hidden" -->
+
 ### The Vtable &mdash; local part
 
 <pre><code data-sample='code/joined_vtable.cpp#joined_vtable'></code></pre>
 
 ----
+
+<!-- .slide: class="slide-hidden" -->
 
 ### The polymorphic wrapper
 
@@ -852,38 +858,13 @@ document_t& current(history_t& x) {
 
 <pre><code data-sample='code/joined_vtable.dyno.cpp#Vehicle'></code></pre>
 
-====================
-
-### Some benchmarks
-
-Calling 2 virtual functions (100 x 2 calls)
-<div class="google-chart">
-{
-  "options": {
-    "legend": { "position": "none" },
-    "vAxis": {
-      "title": "Time (ns)",
-      "viewWindow": {
-        "min": [0],
-        "max": [500]
-      }
-    },
-    "hAxis": { "title": "VTable flavor" }
-  },
-  "data": [
-    ["VTable flavor", "Time (ns)"],
-    ["inheritance", 452],
-    ["everything remote", 454],
-    ["1 function local", 452],
-    ["2 functions local", 483]
-  ]
-}
-</div>
-
 ----
 
-### Not very conclusive
-### Let's look at assembly
+### Again, not really an optimization
+
+====================
+
+### Fun observation about vtables
 
 ----
 
@@ -894,9 +875,9 @@ Calling 2 virtual functions (100 x 2 calls)
 With remote vtable, the vptr has to be reloaded because the dynamic type of
 the object could change during the virtual call
 
-----
+====================
 
-### A story of inlining
+### Another story about inlining
 
 ```c++
 template <typename AnyIterator, typename It>
@@ -1004,18 +985,31 @@ AnyIterator make(It it) {
 
 - By default, all methods are in the remote vtable
 - Consider inlining some methods if you see a difference
+- Watch out for places where you're a few hops away from devirtualization
 
 ==============================================================================
 
-### The future with reflection?
+### Main problem with this talk:
+
+### It's a giant pain to implement
+
+----
+
+### Can we do something about it?
+
+----
+
+### Perhaps with reflection?
 
 ```c++
 struct Vehicle {
   void accelerate();
 };
 
+struct any_vehicle { /* see later */ };
+
 int main() {
-  std::vector<poly<Vehicle>> vehicles;
+  std::vector<any_vehicle> vehicles;
   vehicles.push_back(Car{...});
   vehicles.push_back(Truck{...});
   vehicles.push_back(lib::Motorcycle{...});
@@ -1028,10 +1022,76 @@ int main() {
 
 ----
 
-### The future with metaclasses?
+### Figure out the vtable layout
 
 ```c++
-interface Vehicle {
+constexpr std::meta::type vtable_layout(std::meta::type interface) {
+  auto vtable = reflexpr(struct { });
+  for (auto method : interface.methods()) {
+    // signature of the method, with void* as first argument
+    auto signature = method.signature()
+                           .insert_argument(0, reflexpr(void*));
+    vtable.add_public_member(method.name(), method.add_ptr());
+  }
+  return vtable;
+}
+
+template <typename Interface>
+using vtable_layout_t = typename(vtable_layout(reflexpr(Interface)));
+```
+
+----
+
+### Fill the vtable
+
+```c++
+constexpr vtable_layout_t<Interface>
+fill_vtable(std::meta::type interface, std::meta::type model) {
+  vtable_layout_t<Interface> vtable;
+  for constexpr (auto method : interface) {
+    vtable. idexpr(method.name()) = unreflexpr(method.address());
+  }
+  return vtable;
+}
+
+template <typename Interface, typename Model>
+static constexpr vtable_layout_t<Interface> vtable_for =
+                fill_vtable(reflexpr(Interface), reflexpr(Model));
+```
+
+----
+
+### Generate the type-erased wrapper
+
+```c++
+class any_vehicle {
+  using VTable = vtable_layout_t<Vehicle>;
+  VTable* vtable_;
+  void* storage_;
+
+public:
+  template <typename V>
+  any_vehicle(V v)
+    : vtable_{&vtable_for<Vehicle, V>}
+    , storage_{new V{v}}
+  { }
+
+  void accelerate() {
+    vtable_->accelerate(storage_);
+  }
+};
+```
+
+----
+
+### Or with metaclasses? ([p0707r3](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0707r3.pdf))
+
+```c++
+constexpr std::meta::type interface(std::meta::type input) {
+  // generates the type-erasure wrapper
+}
+
+class<interface> Vehicle {
   void accelerate();
 };
 
