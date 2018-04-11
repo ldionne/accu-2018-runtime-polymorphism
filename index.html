@@ -452,6 +452,14 @@ Creating many 16 bytes objects
 }
 </div>
 
+Note:
+- In some cases, similar benefits could be achieved by using a pool allocator
+- However, if you shuffle the data with a pool allocator, the data and the pointer
+  to the data become in a different order. Traversing and dereferencing elements
+  in a shuffled sequence may become cache unfriendly. With the local buffer and
+  SBO approaches, the data and the handle stay together so this problem does not
+  arise.
+
 ----
 
 <!-- .slide: class="slide-hidden" -->
