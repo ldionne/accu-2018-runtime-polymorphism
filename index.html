@@ -693,7 +693,10 @@ thread safety with minimal headache.
 
 ----
 
-### Concrete example (stolen from Sean Parent)
+<!-- .slide: class="slide-hidden" -->
+
+### Concrete example
+#### (stolen from Sean Parent)
 
 ```c++
 int main() {
@@ -708,7 +711,6 @@ int main() {
 
   current(h).emplace_back(current(h));
   current(h).emplace_back(my_class_t());
-  current(h)[1] = std::string("World");
 
   draw(current(h), std::cout);
 
@@ -719,6 +721,8 @@ int main() {
 ```
 
 ----
+
+<!-- .slide: class="slide-hidden" -->
 
 ```c++
 using document_t = std::vector<Drawable>;
@@ -750,6 +754,7 @@ document_t& current(history_t& x) {
   <li class="strength">Allows sharing potentially expensive state</li>
   <li class="strength">Interacts nicely with concurrency</li>
   <li class="weakness">Allocates</li>
+  <li class="weakness">Uses reference counts</li>
 </ul>
 
 ====================
