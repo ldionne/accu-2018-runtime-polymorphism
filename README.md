@@ -18,6 +18,15 @@ CMAKE_PREFIX_PATH="$(./code/dependencies/install.sh)"
 cmake --build build
 ```
 
+## Running a local server
+```sh
+cd reveal
+npm install # you can make sure that Python < 3 is used with `--python=python2.XYZ`
+grunt serve --root=..
+```
+
+Then visit http://localhost:8000.
+
 <!-- Links -->
 [ACCU 2018]: https://accu.org/index.php/conferences/accu_conference_2018
 [reveal.js]: https://github.com/hakimel/reveal.js
