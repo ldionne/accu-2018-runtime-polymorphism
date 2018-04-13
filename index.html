@@ -423,30 +423,25 @@ Mention that we're not checking for the alignment here.
 ### A quick benchmark
 
 Creating many 16 bytes objects
-<div class="google-chart">
+<canvas data-chart="bar">
+<!--
 {
-  "options": {
-    "legend": { "position": "none" },
-    "vAxis": {
-      "title": "Time (ns)",
-      "viewWindow": {
-        "min": [0],
-        "max": [80]
-      }
-    },
-    "hAxis": { "title": "Storage type" }
-  },
-  "data": [
-    ["Storage type", "Time (ns)"],
-    ["inheritance", 55],
-    ["remote storage", 54],
-    ["SBO storage (4 bytes)", 54],
-    ["SBO storage (8 bytes)", 56],
-    ["SBO storage (16 bytes)", 3],
-    ["local storage (16 bytes)", 2]
-  ]
+  "data": {
+    "labels": ["inheritance",
+               "remote storage",
+               "SBO storage (4 bytes)",
+               "SBO storage (8 bytes)",
+               "SBO storage (16 bytes)",
+               "local storage (16 bytes)"],
+    "datasets": [{
+      "data": [55, 54, 54, 56, 3, 2],
+      "label": "Time (ns)",
+      "backgroundColor": "rgba(20, 220, 220, 1)"
+    }]
+  }
 }
-</div>
+-->
+</canvas>
 
 Note:
 - In some cases, similar benefits could be achieved by using a pool allocator
@@ -461,30 +456,25 @@ Note:
 <!-- .slide: class="slide-hidden" -->
 
 Creating many 4 bytes objects
-<div class="google-chart">
+<canvas data-chart="bar">
+<!--
 {
-  "options": {
-    "legend": { "position": "none" },
-    "vAxis": {
-      "title": "Time (ns)",
-      "viewWindow": {
-        "min": [0],
-        "max": [80]
-      }
-    },
-    "hAxis": { "title": "Storage type" }
-  },
-  "data": [
-    ["Storage type", "Time (ns)"],
-    ["inheritance", 56],
-    ["remote storage", 55],
-    ["SBO storage (4 bytes)", 3],
-    ["SBO storage (8 bytes)", 3],
-    ["SBO storage (16 bytes)", 3],
-    ["local storage (16 bytes)", 3]
-  ]
+  "data": {
+    "labels": ["inheritance",
+               "remote storage",
+               "SBO storage (4 bytes)",
+               "SBO storage (8 bytes)",
+               "SBO storage (16 bytes)",
+               "local storage (16 bytes)"],
+    "datasets": [{
+      "data": [56, 55, 3, 3, 3, 3],
+      "label": "Time (ns)",
+      "backgroundColor": "rgba(20, 220, 220, 1)"
+    }]
+  }
 }
-</div>
+-->
+</canvas>
 
 ----
 
@@ -493,30 +483,25 @@ Creating many 4 bytes objects
 Accessing many 4 bytes objects<br>
 (10 x 3 method calls, SBO with bool)
 
-<div class="google-chart">
+<canvas data-chart="bar">
+<!--
 {
-  "options": {
-    "legend": { "position": "none" },
-    "vAxis": {
-      "title": "Time (ns)",
-      "viewWindow": {
-        "min": [0],
-        "max": [80]
-      }
-    },
-    "hAxis": { "title": "Storage type" }
-  },
-  "data": [
-    ["Storage type", "Time (ns)"],
-    ["inheritance", 49],
-    ["remote storage", 45],
-    ["SBO storage (4 bytes)", 59],
-    ["SBO storage (8 bytes)", 58],
-    ["SBO storage (16 bytes)", 58],
-    ["local storage (16 bytes)", 46]
-  ]
+  "data": {
+    "labels": ["inheritance",
+               "remote storage",
+               "SBO storage (4 bytes)",
+               "SBO storage (8 bytes)",
+               "SBO storage (16 bytes)",
+               "local storage (16 bytes)"],
+    "datasets": [{
+      "data": [49, 45, 59, 58, 58, 46],
+      "label": "Time (ns)",
+      "backgroundColor": "rgba(20, 220, 220, 1)"
+    }]
+  }
 }
-</div>
+-->
+</canvas>
 
 ----
 
@@ -524,30 +509,25 @@ Accessing many 4 bytes objects<br>
 
 Accessing many objects<br>
 (half 8 bytes, half 16 bytes, SBO with bool)
-<div class="google-chart">
+<canvas data-chart="bar">
+<!--
 {
-  "options": {
-    "legend": { "position": "none" },
-    "vAxis": {
-      "title": "Time (ns)",
-      "viewWindow": {
-        "min": [0],
-        "max": [80]
-      }
-    },
-    "hAxis": { "title": "Storage type" }
-  },
-  "data": [
-    ["Storage type", "Time (ns)"],
-    ["inheritance", 46],
-    ["remote storage", 47],
-    ["SBO storage (4 bytes)", 56],
-    ["SBO storage (8 bytes)", 56],
-    ["SBO storage (16 bytes)", 58],
-    ["local storage (16 bytes)", 46]
-  ]
+  "data": {
+    "labels": ["inheritance",
+               "remote storage",
+               "SBO storage (4 bytes)",
+               "SBO storage (8 bytes)",
+               "SBO storage (16 bytes)",
+               "local storage (16 bytes)"],
+    "datasets": [{
+      "data": [46, 47, 56, 56, 58, 46],
+      "label": "Time (ns)",
+      "backgroundColor": "rgba(20, 220, 220, 1)"
+    }]
+  }
 }
-</div>
+-->
+</canvas>
 
 ----
 
@@ -555,30 +535,25 @@ Accessing many objects<br>
 
 Accessing many 4 bytes objects
 <br>(10 x 3 method calls, SBO with pointer)
-<div class="google-chart">
+<canvas data-chart="bar">
+<!--
 {
-  "options": {
-    "legend": { "position": "none" },
-    "vAxis": {
-      "title": "Time (ns)",
-      "viewWindow": {
-        "min": [0],
-        "max": [80]
-      }
-    },
-    "hAxis": { "title": "Storage type" }
-  },
-  "data": [
-    ["Storage type", "Time (ns)"],
-    ["inheritance", 49],
-    ["remote storage", 46],
-    ["SBO storage (4 bytes)", 46],
-    ["SBO storage (8 bytes)", 45],
-    ["SBO storage (16 bytes)", 45],
-    ["local storage (16 bytes)", 46]
-  ]
+  "data": {
+    "labels": ["inheritance",
+               "remote storage",
+               "SBO storage (4 bytes)",
+               "SBO storage (8 bytes)",
+               "SBO storage (16 bytes)",
+               "local storage (16 bytes)"],
+    "datasets": [{
+      "data": [49, 46, 46, 45, 45, 46],
+      "label": "Time (ns)",
+      "backgroundColor": "rgba(20, 220, 220, 1)"
+    }]
+  }
 }
-</div>
+-->
+</canvas>
 
 ----
 
@@ -586,30 +561,25 @@ Accessing many 4 bytes objects
 
 Accessing many objects<br>
 (half 8 bytes, half 16 bytes, SBO with pointer)
-<div class="google-chart">
+<canvas data-chart="bar">
+<!--
 {
-  "options": {
-    "legend": { "position": "none" },
-    "vAxis": {
-      "title": "Time (ns)",
-      "viewWindow": {
-        "min": [0],
-        "max": [80]
-      }
-    },
-    "hAxis": { "title": "Storage type" }
-  },
-  "data": [
-    ["Storage type", "Time (ns)"],
-    ["inheritance", 49],
-    ["remote storage", 45],
-    ["SBO storage (4 bytes)", 53],
-    ["SBO storage (8 bytes)", 50],
-    ["SBO storage (16 bytes)", 45],
-    ["local storage (16 bytes)", 46]
-  ]
+  "data": {
+    "labels": ["inheritance",
+               "remote storage",
+               "SBO storage (4 bytes)",
+               "SBO storage (8 bytes)",
+               "SBO storage (16 bytes)",
+               "local storage (16 bytes)"],
+    "datasets": [{
+      "data": [49, 45, 53, 50, 45, 46],
+      "label": "Time (ns)",
+      "backgroundColor": "rgba(20, 220, 220, 1)"
+    }]
+  }
 }
-</div>
+-->
+</canvas>
 
 ----
 
@@ -913,27 +883,20 @@ void benchmark_any_iterator(benchmark::State& state) {
 
 ----
 
-<div class="google-chart">
+<canvas data-chart="bar">
+<!--
 {
-  "options": {
-    "legend": { "position": "none" },
-    "vAxis": {
-      "title": "Time (ns)",
-      "viewWindow": {
-        "min": [0],
-        "max": [1200]
-      }
-    },
-    "hAxis": { "title": "VTable flavor" }
-  },
-  "data": [
-    ["VTable flavor", "Time (ns)"],
-    ["static dispatch", 14],
-    ["inheritance", 1126],
-    ["dyno's remote vtable", 1089]
-  ]
+  "data": {
+    "labels": ["static dispatch", "inheritance", "dyno's remote vtable"],
+    "datasets": [{
+      "data": [14, 1126, 1089],
+      "label": "Time (ns)",
+      "backgroundColor": "rgba(20, 220, 220, 1)"
+    }]
+  }
 }
-</div>
+-->
+</canvas>
 
 ----
 
@@ -949,27 +912,20 @@ AnyIterator make(It it) {
 
 ----
 
-<div class="google-chart">
+<canvas data-chart="bar">
+<!--
 {
-  "options": {
-    "legend": { "position": "none" },
-    "vAxis": {
-      "title": "Time (ns)",
-      "viewWindow": {
-        "min": [0],
-        "max": [1200]
-      }
-    },
-    "hAxis": { "title": "VTable flavor" }
-  },
-  "data": [
-    ["VTable flavor", "Time (ns)"],
-    ["static dispatch", 11],
-    ["inheritance", 1070],
-    ["dyno's remote vtable", 11]
-  ]
+  "data": {
+    "labels": ["static dispatch", "inheritance", "dyno's remote vtable"],
+    "datasets": [{
+      "data": [11, 1070, 11],
+      "label": "Time (ns)",
+      "backgroundColor": "rgba(20, 220, 220, 1)"
+    }]
+  }
 }
-</div>
+-->
+</canvas>
 
 ----
 
@@ -1203,7 +1159,6 @@ https://ldionne.com
       </div>
     </div>
 
-    <script src="js/google-chart.js"></script>
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="reveal/js/reveal.js"></script>
     <script src="reveal/lib/js/head.min.js"></script>
@@ -1214,11 +1169,35 @@ https://ldionne.com
         history: true,
         transition: 'none',
 
+        // Default settings for charts embedded in the presentation
+        chart: {
+          defaults: {
+            global: {
+              responsive: true,
+              animation: null,
+              title: { fontColor: "#FFF" },
+              legend: {
+                labels: {
+                  fontColor: "#FFF",
+                  fontSize: 20
+                }
+              }
+            },
+            scale: {
+              scaleLabel: { fontColor: "#FFF" },
+              gridLines: { color: "#FFF", zeroLineColor: "#FFF" },
+              ticks: { fontColor: "#FFF" }
+            }
+          }
+        },
+
         dependencies: [
           { src: 'reveal/plugin/markdown/marked.js' },
           { src: 'reveal/plugin/markdown/markdown.js' },
           { src: 'reveal/plugin/notes/notes.js', async: true },
           { src: 'reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/Chart.min.js' },
+          { src: 'plugin/csv2chart.js' },
           { src: 'plugin/sampler.js' }
         ]
       });
@@ -1241,23 +1220,6 @@ https://ldionne.com
           console.log("Reloading godbolt iframe");
           godbolt.contentWindow.location.reload(true);
         }
-      });
-
-      // Whenever the slide changes, we scan the current slide to see whether
-      // there are Google charts to format, and we do it.
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(function() {
-        Reveal.addEventListener('slidechanged', function(event) {
-          event.currentSlide.querySelectorAll('.google-chart').forEach(function(div) {
-            if (!div.hasAttribute("data-chart-config")) {
-              div.setAttribute("data-chart-config", div.innerHTML);
-            }
-            var config = JSON.parse(div.getAttribute("data-chart-config"));
-            var data = google.visualization.arrayToDataTable(config.data);
-            var chart = new google.charts.Bar(div);
-            chart.draw(data, google.charts.Bar.convertOptions(config.options));
-          });
-        });
       });
     </script>
   </body>
